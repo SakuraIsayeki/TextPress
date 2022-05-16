@@ -5,8 +5,20 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <LangVersion>preview</LangVersion>
+        
         <Configurations>Debug;Release</Configurations>
         <Platforms>AnyCPU</Platforms>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        
+        <PackageVersion>1.0</PackageVersion>
+        <Title>TextPress</Title>
+        <Authors>Sakura Akeno Isayeki</Authors>
+        <Description>Simple and lightweight string templating library for .NET</Description>
+        <Copyright>ISC License</Copyright>
+        
+        <PackageProjectUrl>https://github.com/SakuraIsayeki/TextPress</PackageProjectUrl>
+        <PackageLicenseUrl>https://github.com/SakuraIsayeki/TextPress/blob/main/LICENSE</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/SakuraIsayeki/TextPress</RepositoryUrl>
+        <RepositoryType>Git</RepositoryType>
     </PropertyGroup>
-
 </Project>

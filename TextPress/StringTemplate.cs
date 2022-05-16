@@ -33,7 +33,7 @@ public class StringTemplate
 	/// <summary>
 	/// Builds a Regex from the given options.
 	/// </summary>
-	/// <exception cref="ArgumentOutOfRangeException"></exception>
+	/// <exception cref="ArgumentOutOfRangeException">One or more properties set in <see cref="options"/> are invalid.</exception>
 	protected internal static Regex BuildTemplateRegex(StringTemplateOptions options)
 	{
 		/*
@@ -47,9 +47,18 @@ public class StringTemplate
 		 *	   - DoubleDelimiters indicates that the variable is escaped if StartDelimiter and EndDelimiter are present twice in a row.
 		 */
 
+		// Perform null/empty checks on delimiters & escape chars
+		if (string.IsNullOrWhiteSpace(options.StartDelimiter)) throw new ArgumentOutOfRangeException(nameof(options.StartDelimiter), "StartDelimiter cannot be null or empty.");
+		if (string.IsNullOrWhiteSpace(options.EndDelimiter)) throw new ArgumentOutOfRangeException(nameof(options.EndDelimiter), "EndDelimiter cannot be null or empty.");
+		
+		if (options is { EscapingStyle: not (VariableEscapingStyle.None or VariableEscapingStyle.DoubleDelimiters), EscapeCharacter: { } c } && char.IsControl(c))
+		{
+			throw new ArgumentOutOfRangeException(nameof(options.EscapeCharacter), "EscapeCharacter cannot be null, or a control character.");
+		}
+
 		// Escape all options characters
-		string startDelimiter = Regex.Escape(options.StartDelimiter.ToString());
-		string endDelimiter = Regex.Escape(options.EndDelimiter.ToString());
+		string startDelimiter = Regex.Escape(options.StartDelimiter);
+		string endDelimiter = Regex.Escape(options.EndDelimiter);
 		string? escapeCharacter = null;
 		
 		if (options is { EscapingStyle: not (VariableEscapingStyle.None or VariableEscapingStyle.DoubleDelimiters), EscapeCharacter: not null })
@@ -62,7 +71,7 @@ public class StringTemplate
 			// No escaping
 			VariableEscapingStyle.None => $"{startDelimiter}(?<variable>[^{endDelimiter}]+){endDelimiter}",
 
-			not (VariableEscapingStyle.None or VariableEscapingStyle.DoubleDelimiters) when options.EscapeCharacter is null 
+			not (VariableEscapingStyle.None or VariableEscapingStyle.DoubleDelimiters) when options.EscapeCharacter is null
 				=> throw new ArgumentOutOfRangeException(nameof(options), "EscapeCharacter must be specified when EscapingStyle is not None."),
 			
 			// Exclude any string with double delimiters (e.g. {{variable}} will be ignored)

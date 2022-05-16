@@ -1,4 +1,5 @@
-﻿using BenchmarkDotNet.Attributes;
+﻿using System.Collections.Immutable;
+using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Jobs;
 using TextPress;
 
@@ -11,7 +12,9 @@ namespace TextPress.Benchmarks;
 [MemoryDiagnoser, GcServer(true)]
 public class StringTemplateBenchmarks
 {
+	private static readonly Dictionary<string, string> values = new() { { "name", "World" } };
+
 	[Benchmark]
-	public string FillTemplateCompiledRegex() => StringTemplate.FillTemplate("Hello, {name}!", new Dictionary<string, string> { { "name", "World" } });
+	public string FillTemplateCompiledRegex() => StringTemplate.Default.Fill("Hello, {name}!", values);
 	
 }

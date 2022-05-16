@@ -12,6 +12,8 @@ Summary? summary = BenchmarkRunner.Run<StringTemplateBenchmarks>(DefaultConfig.I
 #if !LATEST_RUNTIME_ONLY
 	.AddJob(Job.Default.WithRuntime(CoreRuntime.Core60))
 #endif
+#if NET7_0_OR_GREATER
 	.AddJob(Job.Default.WithRuntime(CoreRuntime.CreateForNewVersion("net7.0", ".NET 7.0 (Workstation GC)")).AsBaseline())
 	.AddJob(Job.Default.WithRuntime(CoreRuntime.CreateForNewVersion("net7.0", ".NET 7.0 (Server GC)")).WithGcServer(true))
+#endif
 );

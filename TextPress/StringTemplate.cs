@@ -1,5 +1,7 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 
+[assembly: InternalsVisibleTo("TextPress.Tests")]
 namespace TextPress;
 
 /// <summary>
@@ -10,24 +12,21 @@ public class StringTemplate
 	/// <summary>
 	/// Represents the Regular Expression for which variables will be matched.
 	/// </summary>
-	protected Regex TemplateRegex { get; } = _defaultTemplateRegex;
+	protected Regex TemplateRegex { get; }
 
-	private const string DefaultTemplatePattern = "{(?<variable>[^}]+)}";
-	protected static readonly Regex _defaultTemplateRegex = new(DefaultTemplatePattern, RegexOptions.Compiled);
-
-	public static StringTemplate Default { get; } = new(_defaultTemplateRegex);
+	/// <summary>
+	/// Options set for this template.
+	/// </summary>
+	public StringTemplateOptions Options { get; }
+	public static StringTemplate Default { get; } = new(new() { RegexOptions = RegexOptions.Compiled });
 
 	/// <summary>
 	/// Instantiates a new StringTemplate using the given options.
 	/// </summary>
 	public StringTemplate(StringTemplateOptions options)
 	{
-		TemplateRegex = BuildTemplateRegex(options);
-	}
-
-	protected internal StringTemplate(Regex regex)
-	{
-		TemplateRegex = regex;
+		Options = options;
+		TemplateRegex = BuildTemplateRegex(Options);
 	}
 
 	/// <summary>

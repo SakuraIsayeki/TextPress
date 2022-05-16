@@ -16,6 +16,10 @@ public class StringTemplateFactory
 	/// </summary>
 	protected IDictionary<string, StringTemplate?> Templates { get; } = new Dictionary<string, StringTemplate?>();
 
+	/// <summary>
+	/// Default options applied to all <see cref="StringTemplate"/> instances created by this factory,
+	/// when no options are explicitly provided.
+	/// </summary>
 	public static StringTemplateOptions DefaultOptions { get; } = new()
 	{
 		EscapingStyle = VariableEscapingStyle.None,

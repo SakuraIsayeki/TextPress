@@ -1,0 +1,9 @@
+﻿<Solution>
+  <Folder Name="Solution Items">
+    <File Path=".gitignore" />
+    <File Path="LICENSE" />
+  </Folder>
+  <Project Path="TextPress.Benchmarks/TextPress.Benchmarks.csproj" />
+  <Project Path="TextPress.Tests/TextPress.Tests.csproj" />
+  <Project Path="TextPress/TextPress.csproj" />
+</Solution>

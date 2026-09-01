@@ -4,6 +4,7 @@
         <OutputType>Exe</OutputType>
         <Configurations>LatestOnly;All</Configurations>
         <Platforms>AnyCPU</Platforms>
+        <IsPackable>false</IsPackable>
         <GenerateSBOM>false</GenerateSBOM>
     </PropertyGroup>
 

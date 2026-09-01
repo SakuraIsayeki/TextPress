@@ -1,9 +1,43 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <Deterministic>true</Deterministic>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <IncludeSymbols>true</IncludeSymbols>
+    <DebugType>portable</DebugType>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <GenerateSBOM>true</GenerateSBOM>
+
+
+    <Title>TextPress</Title>
+    <Product>TextPress</Product>
+    <Authors>Sakura Akeno Isayeki</Authors>
+    <Description>Simple and lightweight string templating library for .NET</Description>
+    <Copyright>ISC License</Copyright>
+
+    <PackageLicenseExpression>ISC</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/SakuraIsayeki/TextPress</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+  
   <ItemGroup>
-    <PackageReference Include="Nerdbank.GitVersioning" Condition="!Exists('packages.config')">
-      <PrivateAssets>all</PrivateAssets>
-      <Version>3.10.94</Version>
-    </PackageReference>
+    <PackageReference Include="Nerdbank.GitVersioning" Version="3.10.94" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.Sbom.Targets" Version="3.1.0" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(PackAsTool) != 'true'">
+    <PackageReference Include="DotNet.ReproducibleBuilds" Version="2.0.5" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup Label="TestProjectAccessibility">
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>TextPress.Tests</_Parameter1>
+    </AssemblyAttribute>
   </ItemGroup>
 </Project>

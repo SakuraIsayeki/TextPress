@@ -1,0 +1,45 @@
+name: .NET Build & Test
+
+permissions:
+  contents: read
+
+
+on:
+  push:
+    paths-ignore:
+      - 'nodsoft_moltenobsidian_web/**'
+      - 'nodsoft_moltenobsidian_ssg_client/**'
+  pull_request:
+  workflow_call:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    
+    runs-on: ${{ matrix.os }}
+
+    # Actions pinned to commits to prevent supply-chain attacks.
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # avoid shallow clone so nbgv can do its work.
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: '10.0'
+
+      - uses: dotnet/nbgv@v0.5.2
+        id: nbgv
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore
+
+      - name: Test
+        run: dotnet test --no-build --verbosity normal

@@ -1,0 +1,12 @@
+﻿<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+    <File Path="Directory.Build.props" />
+    <File Path="dotnet-tools.json" />
+    <File Path="LICENSE" />
+    <File Path="version.json" />
+  </Folder>
+  <Project Path="TextPress.Benchmarks/TextPress.Benchmarks.csproj" />
+  <Project Path="TextPress.Tests/TextPress.Tests.csproj" />
+  <Project Path="TextPress/TextPress.csproj" />
+</Solution>

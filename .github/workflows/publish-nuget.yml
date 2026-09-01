@@ -87,7 +87,7 @@ jobs:
 
       - name: Publish packages to ${{ matrix.nuget.name }}
         run: |
-          dotnet nuget push "src/**/Release/*.nupkg" \
+          dotnet nuget push "**/Release/*.nupkg" \
           --source "${{ matrix.nuget.source }}" \
           --symbol-source "${{ matrix.nuget.source }}" \
           --api-key "${{ matrix.nuget.name == 'NuGet' && steps.nuget_login.outputs.NUGET_API_KEY || secrets[matrix.nuget.keyname] }}" \
